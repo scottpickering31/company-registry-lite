@@ -34,7 +34,7 @@ export default function MuiQueryInput({
     useState<Record<number, string>>(initialSelected);
   const [input, setInput] = useState("");
 
-  // Store the debounced selected values in state
+  // Store the debounced selected values in state - to avoid unnecessary re-renders
   const [value] = useDebounce(input, 5000);
 
   // storing the selected values and updating the state

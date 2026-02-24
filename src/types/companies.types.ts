@@ -5,5 +5,4 @@ export interface Company {
   name: string;
   status: CompanyStatus;
   companyNumber: string;
-  actions: ["View", "Edit", "Delete"];
 }
