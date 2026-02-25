@@ -1,5 +1,4 @@
 import type { Company } from "@/src/types/companies.types";
-import MuiTable from "../components/layout/MuiTable";
 
 export const mockCompanyColumnNames = [
   "Company Name",
@@ -14,6 +13,7 @@ export const mockCompanies: Company[] = [
     name: "Acme Corporation",
     status: "Active",
     companyNumber: "03420134",
+    // Needs dynamic route to company
   },
   {
     id: 2,

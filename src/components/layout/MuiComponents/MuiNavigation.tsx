@@ -1,10 +1,10 @@
 "use client";
 
 import AppBar from "@mui/material/AppBar";
-import NavigationRoute from "./MuiNavigationRoute";
+import MuiNavigationRoute from "@/src/components/layout/MuiComponents/MuiNavigationRoute";
 import { NavObj } from "@/src/constants/NavObj";
 import { usePathname } from "next/navigation";
-import MuiContainer from "./MuiContainer";
+import MuiContainer from "@/src/components/layout/MuiComponents/MuiContainer";
 
 export default function MuiNavigation() {
   const path = usePathname();
@@ -17,7 +17,7 @@ export default function MuiNavigation() {
           <div className="flex flex-row items-center gap-15">
             {NavObj.map((routes, index) => {
               return (
-                <NavigationRoute
+                <MuiNavigationRoute
                   key={index}
                   NavRoute={routes.route}
                   NavTitle={routes.title}

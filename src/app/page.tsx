@@ -1,41 +1,28 @@
-import MuiContainer from "../components/layout/MuiContainer";
-import MuiHeader from "../components/layout/MuiHeader";
-import MuiNavigation from "../components/layout/MuiNavigation";
-import MuiQueryInput from "../components/layout/MuiQueryInput";
-import MuiTable from "../components/layout/MuiTable";
-import { mockCompanies, mockCompanyColumnNames } from "../mock/companies";
-
-const DashboardQuerySelectTitles = [
-  {
-    id: 1,
-    label: "Status:",
-    values: ["All", "Active", "Dormant"],
-  },
-  {
-    id: 2,
-    label: "Sort By:",
-    values: ["Name", "Date Created"],
-  },
-];
-
-const TextFieldLabel = "Search Companies...";
+import MuiContainer from "@/src/components/layout/MuiComponents/MuiContainer";
+import MuiHeader from "@/src/components/layout/MuiComponents/MuiHeader";
+import MuiNavigation from "@/src/components/layout/MuiComponents/MuiNavigation";
+import MuiQueryInput from "@/src/components/layout/MuiComponents/MuiQueryInput";
+import CompaniesTableClient from "../features/dashboard/CompaniesTableClient";
+import { mockCompanies } from "../mock/dashboard";
 
 export default function Dashboard() {
   return (
     <>
       <MuiNavigation />
       <MuiContainer>
-        {/* TODO: Add Button onClick handler to MuiHeader */}
         <MuiHeader
           title="Company Management"
-          buttonActive={true}
+          buttonActive
           buttonText="Add New Company"
         />
         <MuiQueryInput
-          querySelectTitles={DashboardQuerySelectTitles}
-          textFieldLabel={TextFieldLabel}
+          querySelectTitles={[
+            { id: 1, label: "Status:", values: ["All", "Active", "Dormant"] },
+            { id: 2, label: "Sort By:", values: ["Name", "Date Created"] },
+          ]}
+          textFieldLabel="Search Companies..."
         />
-        <MuiTable columns={mockCompanyColumnNames} rows={mockCompanies} />
+        <CompaniesTableClient rows={mockCompanies} />
       </MuiContainer>
     </>
   );

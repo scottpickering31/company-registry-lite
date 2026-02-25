@@ -4,9 +4,14 @@ interface MuiButtonProps extends ButtonProps {
   actions?: boolean;
 }
 
-export default function MuiButton({ children, actions }: MuiButtonProps) {
+export default function MuiButton({
+  children,
+  actions,
+  ...props
+}: MuiButtonProps) {
   return (
     <Button
+      {...props}
       variant={actions ? "outlined" : "contained"}
       sx={
         actions

@@ -1,8 +1,8 @@
 "use client";
 
 import { Stack } from "@mui/material";
-import MuiSelect from "./MuiSelect";
-import MuiTextField from "./MuiTextField";
+import MuiSelect from "@/src/components/layout/MuiComponents/MuiSelect";
+import MuiTextField from "@/src/components/layout/MuiComponents/MuiTextField";
 import { useMemo, useState } from "react";
 import type { SelectChangeEvent } from "@mui/material/Select";
 import { useDebounce } from "use-debounce";

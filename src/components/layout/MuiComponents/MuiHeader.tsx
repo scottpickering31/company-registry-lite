@@ -1,6 +1,6 @@
 import { Divider } from "@mui/material";
-import MuiContainer from "./MuiContainer";
-import MuiButton from "../buttons/MuiButton";
+import MuiContainer from "@/src/components/layout/MuiComponents/MuiContainer";
+import MuiButton from "@/src/components/buttons/MuiButton";
 
 interface HeaderProps {
   title: string;
