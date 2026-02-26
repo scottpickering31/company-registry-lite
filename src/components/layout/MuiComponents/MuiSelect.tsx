@@ -25,10 +25,10 @@ export default function MuiSelect({
 
   return (
     <Stack direction="row" spacing={2} alignItems="center">
-      <InputLabel id={labelId} sx={{ fontWeight: "bold", fontSize: "20px" }}>
+      <InputLabel id={labelId} sx={{ fontWeight: "bold", fontSize: "18px" }}>
         {inputLabelValue}
       </InputLabel>
-      <Select {...selectProps}>
+      <Select {...selectProps} sx={{ width: "15rem" }}>
         {options.map((opt) => (
           <MenuItem key={opt.value} value={opt.value}>
             {opt.label}

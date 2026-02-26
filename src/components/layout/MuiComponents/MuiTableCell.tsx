@@ -5,9 +5,15 @@ import type { ReactNode } from "react";
 
 type Props = TableCellProps & { children: ReactNode };
 
-export default function MuiTableCell({ children, ...props }: Props) {
+export default function MuiTableCell({ children, sx, ...props }: Props) {
   return (
-    <TableCell {...props} sx={{ fontSize: "18px" }}>
+    <TableCell
+      {...props}
+      sx={{
+        fontSize: "16px",
+        ...sx,
+      }}
+    >
       {children}
     </TableCell>
   );

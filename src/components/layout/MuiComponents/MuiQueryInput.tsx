@@ -6,6 +6,7 @@ import MuiTextField from "@/src/components/layout/MuiComponents/MuiTextField";
 import { useMemo, useState } from "react";
 import type { SelectChangeEvent } from "@mui/material/Select";
 import { useDebounce } from "use-debounce";
+import { useInputStore } from "@/src/store/input.store";
 
 type SelectConfig = {
   id: number;
@@ -15,12 +16,14 @@ type SelectConfig = {
 
 interface QueryInputProps {
   querySelectTitles: SelectConfig[];
-  textFieldLabel: string;
+  textFieldActive?: boolean;
+  textFieldLabel?: string;
 }
 
 export default function MuiQueryInput({
   querySelectTitles,
   textFieldLabel,
+  textFieldActive = true,
 }: QueryInputProps) {
   // Memoising values as initial state - because we may not know the number of Selects at compile time
   const initialSelected = useMemo(() => {
@@ -32,7 +35,7 @@ export default function MuiQueryInput({
   // Store the MUIselected values in state
   const [selectedById, setSelectedById] =
     useState<Record<number, string>>(initialSelected);
-  const [input, setInput] = useState("");
+  const { input, setInput } = useInputStore();
 
   // Store the debounced selected values in state - to avoid unnecessary re-renders
   const [value] = useDebounce(input, 5000);
@@ -48,13 +51,15 @@ export default function MuiQueryInput({
   };
 
   return (
-    <div className="flex flex-row mt-6 bg-white rounded-md p-5 shadow-xl">
-      <Stack direction="row" spacing={5} alignItems="center">
-        <MuiTextField
-          label={textFieldLabel}
-          onChange={handleTextFieldChange}
-          value={input}
-        />
+    <div className="flex flex-row mt-5 bg-white rounded-md p-5 shadow-xl">
+      <Stack direction="row" spacing={3} alignItems="center">
+        {textFieldActive && (
+          <MuiTextField
+            label={textFieldLabel}
+            onChange={handleTextFieldChange}
+            value={input}
+          />
+        )}
 
         {querySelectTitles.map((cfg) => (
           <MuiSelect

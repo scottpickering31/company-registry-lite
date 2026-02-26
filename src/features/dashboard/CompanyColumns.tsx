@@ -28,6 +28,8 @@ export const CompanyColumns: ColumnDef<Company>[] = [
   },
   {
     header: "Actions",
-    cell: (c) => <ActionsButtonSet view={`/companies/company/${c.id}`} />,
+    cell: (c) => (
+      <ActionsButtonSet editActive={true} view={`/companies/company/${c.id}`} />
+    ),
   },
 ];

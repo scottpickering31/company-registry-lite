@@ -15,7 +15,7 @@ export default function MuiNavigationRoutes({
   return (
     <>
       <Link href={NavRoute}>
-        <h2 className="font-semibold text-xl py-1">{NavTitle}</h2>
+        <h2 className="font-semibold text-lg py-1">{NavTitle}</h2>
         {DividerActive && <Divider className="bg-sky-500 h-1" />}
       </Link>
     </>

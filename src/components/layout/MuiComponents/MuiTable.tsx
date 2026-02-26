@@ -7,32 +7,50 @@ import {
   TableHead,
   TablePagination,
   TableRow,
+  Paper,
 } from "@mui/material";
 import { useMemo, useState } from "react";
 import MuiTableCell from "@/src/components/layout/MuiComponents/MuiTableCell";
 import type { ColumnDef } from "@/src/types/columns.types";
+import { useInputStore } from "@/src/store/input.store";
 
-type Props<T extends { id: number }> = {
+type Props<T extends { id: number; name: string }> = {
   rows: T[];
   columns: ColumnDef<T>[];
+  rowsPerPageOptions: [number, number, number];
 };
 
-export default function MuiTable<T extends { id: number }>({
+export default function MuiTable<T extends { id: number; name: string }>({
   rows,
   columns,
+  rowsPerPageOptions = [3, 5, 10],
 }: Props<T>) {
+  const { input } = useInputStore();
   const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(10);
+  const [rowsPerPage, setRowsPerPage] = useState(rowsPerPageOptions[0]);
   const [selected, setSelected] = useState<T | null>(null);
 
+  const filteredInput = useMemo(() => {
+    const q = input.trim().toLowerCase();
+    if (!q) return rows;
+    return rows.filter((row) => row.name.toLowerCase().includes(q));
+  }, [input, rows]);
+
+  const filteredRows = useMemo(() => {
+    const q = input.trim().toLowerCase();
+    if (!q) return rows;
+    return rows.filter((row) => row.name.toLowerCase().includes(q));
+  }, [input, rows]);
+
   const visibleRows = useMemo(
-    () => rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage),
-    [rows, page, rowsPerPage],
+    () =>
+      filteredRows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage),
+    [filteredRows, page, rowsPerPage],
   );
 
   return (
-    <div className="mt-6 rounded-md bg-white shadow-md">
-      <TableContainer sx={{ maxHeight: 290 }}>
+    <div className="mt-4 rounded-md bg-white shadow-xl">
+      <TableContainer sx={{ maxHeight: 440 }} component={Paper}>
         <Table stickyHeader aria-label="table">
           <TableHead>
             <TableRow>
@@ -43,7 +61,7 @@ export default function MuiTable<T extends { id: number }>({
                   sx={{
                     minWidth: col.width ?? 100,
                     backgroundColor: "#f0f0f0",
-                    fontSize: 20,
+                    fontSize: "18px",
                     fontWeight: "bold",
                     ...col.sx,
                   }}
@@ -80,7 +98,7 @@ export default function MuiTable<T extends { id: number }>({
 
       <TablePagination
         sx={{ backgroundColor: "#f0f0f0" }}
-        rowsPerPageOptions={[3, 5, 10]}
+        rowsPerPageOptions={rowsPerPageOptions}
         component="div"
         count={rows.length}
         rowsPerPage={rowsPerPage}

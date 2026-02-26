@@ -12,8 +12,8 @@ export default function MuiNavigation() {
   return (
     <AppBar position="static">
       <MuiContainer>
-        <div className="flex flex-row justify-between pt-10 py-6 items-center w-full">
-          <h1 className="text-3xl font-bold">Company Registry Lite</h1>
+        <div className="flex flex-row justify-between pt-7 py-5 items-center w-full">
+          <h1 className="text-2xl font-bold">Company Registry Lite</h1>
           <div className="flex flex-row items-center gap-15">
             {NavObj.map((routes, index) => {
               return (

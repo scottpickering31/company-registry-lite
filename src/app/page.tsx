@@ -2,8 +2,11 @@ import MuiContainer from "@/src/components/layout/MuiComponents/MuiContainer";
 import MuiHeader from "@/src/components/layout/MuiComponents/MuiHeader";
 import MuiNavigation from "@/src/components/layout/MuiComponents/MuiNavigation";
 import MuiQueryInput from "@/src/components/layout/MuiComponents/MuiQueryInput";
-import CompaniesTableClient from "../features/dashboard/CompaniesTableClient";
-import { mockCompanies } from "../mock/dashboard";
+import TableClient from "@/src/features/TableClient";
+import { mockCompanies } from "@/src/mock/dashboard";
+import CompanyDetails from "../components/layout/dashboard/CompanyDetails";
+import AuditLog from "../components/layout/dashboard/AuditLog";
+import { CompanyColumns } from "../features/dashboard/CompanyColumns";
 
 export default function Dashboard() {
   return (
@@ -22,7 +25,15 @@ export default function Dashboard() {
           ]}
           textFieldLabel="Search Companies..."
         />
-        <CompaniesTableClient rows={mockCompanies} />
+        <TableClient
+          columns={CompanyColumns}
+          rows={mockCompanies}
+          rowsPerPageOptions={[3, 5, 10]}
+        />
+      </MuiContainer>
+      <MuiContainer sx={{ display: "flex", flexDirection: "row" }}>
+        <CompanyDetails />
+        <AuditLog />
       </MuiContainer>
     </>
   );

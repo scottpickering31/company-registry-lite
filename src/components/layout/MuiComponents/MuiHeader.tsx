@@ -15,9 +15,9 @@ export default function MuiHeader({
 }: HeaderProps) {
   return (
     <MuiContainer>
-      <h1 className="text-4xl font-bold py-8">{title}</h1>
+      <h1 className="text-4xl font-bold my-4">{title}</h1>
       <Divider />
-      <div className="mt-6">
+      <div className="mt-4">
         {buttonActive && <MuiButton>{buttonText}</MuiButton>}
       </div>
     </MuiContainer>
