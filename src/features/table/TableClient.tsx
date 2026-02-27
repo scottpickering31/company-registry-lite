@@ -1,6 +1,6 @@
 "use client";
 
-import MuiTable from "@/src/components/layout/MuiComponents/MuiTable";
+import MuiTable from "@/src/components/layout/mui/MuiTable";
 import type { ColumnDef } from "@/src/types/columns.types";
 
 type TableClientProps<T extends { id: number; name: string }> = {

@@ -1,4 +1,4 @@
-export interface AuditLogs {
+export interface AuditLog {
   id: number;
   date: string;
   event: string;

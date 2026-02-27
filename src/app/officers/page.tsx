@@ -1,17 +1,22 @@
-import MuiContainer from "@/src/components/layout/MuiComponents/MuiContainer";
-import MuiHeader from "@/src/components/layout/MuiComponents/MuiHeader";
-import MuiNavigation from "@/src/components/layout/MuiComponents/MuiNavigation";
-import MuiQueryInput from "@/src/components/layout/MuiComponents/MuiQueryInput";
-import { OfficerColumns } from "@/src/features/officers/OfficerColumns";
-import TableClient from "@/src/features/TableClient";
-import { mockOfficers } from "@/src/mock/officers";
+import MuiContainer from "@/src/components/layout/mui/MuiContainer";
+import MuiHeader from "@/src/components/layout/mui/MuiHeader";
+import MuiNavigation from "@/src/components/layout/mui/MuiNavigation";
+import MuiQueryInput from "@/src/components/layout/mui/MuiQueryInput";
+import { OfficerColumns } from "@/src/features/officers";
+import { TableClient } from "@/src/features/table";
+import { mockOfficers } from "@/src/mocks/officers";
 
 export default function Officers() {
   return (
     <>
       <MuiNavigation />
       <MuiContainer>
-        <MuiHeader title="Officers" buttonActive buttonText="Add New Officer" />
+        <MuiHeader
+          title="Officers"
+          buttonActive
+          buttonText="Add New Officer"
+          subTitle="Officer list"
+        />
         <MuiQueryInput
           querySelectTitles={[
             {

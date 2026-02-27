@@ -10,7 +10,19 @@ export default function MuiTableCell({ children, sx, ...props }: Props) {
     <TableCell
       {...props}
       sx={{
-        fontSize: "16px",
+        fontSize: "15px",
+        color: "#3f3a33",
+        paddingY: "0.9rem",
+        paddingX: "1rem",
+        lineHeight: 1.4,
+        "& .cell-secondary": {
+          color: "#6b6157",
+          fontSize: "12px",
+          fontWeight: 600,
+          letterSpacing: "0.04em",
+          textTransform: "uppercase",
+          marginLeft: "0.5rem",
+        },
         ...sx,
       }}
     >

@@ -1,4 +1,4 @@
-import { mockCompanies } from "@/src/mock/dashboard";
+import { mockCompanies } from "@/src/mocks/dashboard";
 import { notFound } from "next/navigation";
 
 type Props = {

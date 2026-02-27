@@ -1,10 +1,10 @@
-import MuiContainer from "@/src/components/layout/MuiComponents/MuiContainer";
-import MuiHeader from "@/src/components/layout/MuiComponents/MuiHeader";
-import MuiNavigation from "@/src/components/layout/MuiComponents/MuiNavigation";
-import MuiQueryInput from "@/src/components/layout/MuiComponents/MuiQueryInput";
-import { CompanyColumns } from "@/src/features/dashboard/CompanyColumns";
-import TableClient from "@/src/features/TableClient";
-import { mockCompanies } from "@/src/mock/dashboard";
+import MuiContainer from "@/src/components/layout/mui/MuiContainer";
+import MuiHeader from "@/src/components/layout/mui/MuiHeader";
+import MuiNavigation from "@/src/components/layout/mui/MuiNavigation";
+import MuiQueryInput from "@/src/components/layout/mui/MuiQueryInput";
+import { CompanyColumns } from "@/src/features/dashboard";
+import { TableClient } from "@/src/features/table";
+import { mockCompanies } from "@/src/mocks/dashboard";
 
 export default function Companies() {
   return (
@@ -13,6 +13,7 @@ export default function Companies() {
       <MuiContainer>
         <MuiHeader
           title="Companies"
+          subTitle="Company list"
           buttonActive
           buttonText="Add New Company"
         />

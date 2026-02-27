@@ -1,10 +1,10 @@
-import MuiContainer from "@/src/components/layout/MuiComponents/MuiContainer";
-import MuiHeader from "@/src/components/layout/MuiComponents/MuiHeader";
-import MuiNavigation from "@/src/components/layout/MuiComponents/MuiNavigation";
-import MuiQueryInput from "@/src/components/layout/MuiComponents/MuiQueryInput";
-import { FilingColumns } from "@/src/features/filings/FilingColumns";
-import TableClient from "@/src/features/TableClient";
-import { mockFilings } from "@/src/mock/filings";
+import MuiContainer from "@/src/components/layout/mui/MuiContainer";
+import MuiHeader from "@/src/components/layout/mui/MuiHeader";
+import MuiNavigation from "@/src/components/layout/mui/MuiNavigation";
+import MuiQueryInput from "@/src/components/layout/mui/MuiQueryInput";
+import { FilingColumns } from "@/src/features/filings";
+import { TableClient } from "@/src/features/table";
+import { mockFilings } from "@/src/mocks/filings";
 
 export default function Filings() {
   return (
@@ -12,6 +12,7 @@ export default function Filings() {
       <MuiNavigation />
       <MuiContainer>
         <MuiHeader
+          subTitle="Filing list"
           title="Filings"
           buttonActive
           buttonText="File New Document"

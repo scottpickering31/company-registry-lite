@@ -1,12 +1,5 @@
 import type { Company } from "@/src/types/companies.types";
 
-export const mockCompanyColumnNames = [
-  "Company Name",
-  "Company Number",
-  "Status",
-  "Actions",
-];
-
 export const mockCompanies: Company[] = [
   {
     id: 1,

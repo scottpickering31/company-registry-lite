@@ -1,8 +1,8 @@
 "use client";
-import { AuditLogs } from "@/src/types/audit-logs.types";
+import { AuditLog } from "@/src/types/audit-logs.types";
 import type { ColumnDef } from "@/src/types/columns.types";
 
-export const AuditLogsColumns: ColumnDef<AuditLogs>[] = [
+export const auditLogColumns: ColumnDef<AuditLog>[] = [
   {
     header: "ID",
     cell: (c) => <span style={{ fontWeight: 700 }}>{c.id}</span>,

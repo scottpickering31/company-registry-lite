@@ -1,15 +1,5 @@
 import { Officers } from "../types/officers.types";
 
-export const mockOfficerColumnNames = [
-  "ID",
-  "Name",
-  "Company Name",
-  "Role",
-  "Appointed",
-  "Resigned",
-  "Actions",
-];
-
 export const mockOfficers: Officers[] = [
   {
     id: 5001,

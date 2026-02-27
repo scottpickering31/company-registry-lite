@@ -1,12 +1,12 @@
-import MuiContainer from "@/src/components/layout/MuiComponents/MuiContainer";
-import MuiHeader from "@/src/components/layout/MuiComponents/MuiHeader";
-import MuiNavigation from "@/src/components/layout/MuiComponents/MuiNavigation";
-import MuiQueryInput from "@/src/components/layout/MuiComponents/MuiQueryInput";
-import TableClient from "@/src/features/TableClient";
-import { mockCompanies } from "@/src/mock/dashboard";
-import CompanyDetails from "../components/layout/dashboard/CompanyDetails";
-import AuditLog from "../components/layout/dashboard/AuditLog";
-import { CompanyColumns } from "../features/dashboard/CompanyColumns";
+import MuiContainer from "@/src/components/layout/mui/MuiContainer";
+import MuiHeader from "@/src/components/layout/mui/MuiHeader";
+import MuiNavigation from "@/src/components/layout/mui/MuiNavigation";
+import MuiQueryInput from "@/src/components/layout/mui/MuiQueryInput";
+import AuditLog from "@/src/components/layout/dashboard/AuditLog";
+import CompanyDetails from "@/src/components/layout/dashboard/CompanyDetails";
+import { CompanyColumns } from "@/src/features/dashboard";
+import { TableClient } from "@/src/features/table";
+import { mockCompanies } from "@/src/mocks/dashboard";
 
 export default function Dashboard() {
   return (
@@ -15,6 +15,7 @@ export default function Dashboard() {
       <MuiContainer>
         <MuiHeader
           title="Company Management"
+          subTitle="Dashboard"
           buttonActive
           buttonText="Add New Company"
         />

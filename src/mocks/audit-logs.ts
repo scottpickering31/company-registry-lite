@@ -1,14 +1,6 @@
-import { AuditLogs } from "@/src/types/audit-logs.types";
+import { AuditLog } from "@/src/types/audit-logs.types";
 
-export const mockAuditLogsColumnNames = [
-  "ID",
-  "Date/Time",
-  "Event",
-  "Company Name",
-  "Officer",
-];
-
-export const mockAuditLogs: AuditLogs[] = [
+export const mockAuditLogs: AuditLog[] = [
   {
     id: 5001,
     date: "01/10/2023 10:30 AM",

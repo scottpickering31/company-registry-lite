@@ -1,14 +1,5 @@
 import { Filing } from "../types/filings.types";
 
-export const mockFilingColumnNames = [
-  "Filing ID",
-  "Company Name",
-  "Type",
-  "Date Submitted",
-  "Submitted By",
-  "Actions",
-];
-
 export const mockFilings: Filing[] = [
   {
     id: 1,

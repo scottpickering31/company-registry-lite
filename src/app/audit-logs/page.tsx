@@ -1,17 +1,17 @@
-import MuiContainer from "@/src/components/layout/MuiComponents/MuiContainer";
-import MuiHeader from "@/src/components/layout/MuiComponents/MuiHeader";
-import MuiNavigation from "@/src/components/layout/MuiComponents/MuiNavigation";
-import MuiQueryInput from "@/src/components/layout/MuiComponents/MuiQueryInput";
-import { AuditLogsColumns } from "@/src/features/audit-logs/Audit-Logs-Columns";
-import TableClient from "@/src/features/TableClient";
-import { mockAuditLogs } from "@/src/mock/audit-logs";
+import MuiContainer from "@/src/components/layout/mui/MuiContainer";
+import MuiHeader from "@/src/components/layout/mui/MuiHeader";
+import MuiNavigation from "@/src/components/layout/mui/MuiNavigation";
+import MuiQueryInput from "@/src/components/layout/mui/MuiQueryInput";
+import { auditLogColumns } from "@/src/features/audit-logs";
+import { TableClient } from "@/src/features/table";
+import { mockAuditLogs } from "@/src/mocks/audit-logs";
 
 export default function AuditLogs() {
   return (
     <>
       <MuiNavigation />
       <MuiContainer>
-        <MuiHeader title="Audit Logs" buttonActive={false} />
+        <MuiHeader title="Audit Logs" buttonActive={false} subTitle="Audits" />
         <MuiQueryInput
           querySelectTitles={[
             {
@@ -26,7 +26,7 @@ export default function AuditLogs() {
         />
         <TableClient
           rows={mockAuditLogs}
-          columns={AuditLogsColumns}
+          columns={auditLogColumns}
           rowsPerPageOptions={[8, 12, 15]}
         />
       </MuiContainer>

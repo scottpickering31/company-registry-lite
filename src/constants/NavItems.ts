@@ -1,4 +1,4 @@
-export const NavObj = [
+export const navItems = [
   {
     route: "/",
     title: "Dashboard",
