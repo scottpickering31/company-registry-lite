@@ -1,1 +1,0 @@
-export { OfficerColumns } from "./OfficerColumns";

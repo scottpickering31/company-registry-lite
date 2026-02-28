@@ -1,1 +1,0 @@
-export { auditLogColumns } from "./AuditLogColumns";
