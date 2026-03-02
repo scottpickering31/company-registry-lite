@@ -7,9 +7,16 @@ const companyColumns = [
   { key: "actions", header: "Actions", type: "actions" },
 ];
 
-const normalizeStatus = (status) => {
+const normalizeStatusForDb = (status) => {
   if (!status) return null;
   const normalized = String(status).trim().toLowerCase();
+  if (normalized === "active") return "active";
+  if (normalized === "dormant") return "dormant";
+  return null;
+};
+
+const toDisplayStatus = (status) => {
+  const normalized = normalizeStatusForDb(status);
   if (normalized === "active") return "Active";
   if (normalized === "dormant") return "Dormant";
   return null;
@@ -36,10 +43,10 @@ const getCompanyTable = async ({ status, q, sortBy, page, pageSize }) => {
   const whereClauses = [];
   const values = [];
 
-  const normalizedStatus = normalizeStatus(status);
+  const normalizedStatus = normalizeStatusForDb(status);
   if (normalizedStatus) {
     values.push(normalizedStatus);
-    whereClauses.push(`LOWER(status::text) = LOWER($${values.length})`);
+    whereClauses.push(`status::text = $${values.length}`);
   }
 
   if (q) {
@@ -92,11 +99,143 @@ const getCompanyTable = async ({ status, q, sortBy, page, pageSize }) => {
     total: countResult.rows[0]?.total ?? 0,
     rows: rowsResult.rows.map((row) => ({
       ...row,
-      status: normalizeStatus(row.status) ?? row.status,
+      status: toDisplayStatus(row.status) ?? row.status,
     })),
   };
 };
 
+const getOfficerTable = async () => {
+  const result = await pool.query(`
+    SELECT
+      o.id,
+      o.name,
+      c.name AS company,
+      o.role,
+      o.appointed_on AS appointed,
+      o.resigned_on AS resigned
+    FROM officers o
+    JOIN companies c ON c.id = o.company_id
+    ORDER BY o.id DESC
+  `);
+
+  return result.rows.map((row) => ({
+    ...row,
+    resigned: row.resigned ?? "",
+  }));
+};
+
+const createCompany = async ({ name, companyNumber, status }) => {
+  const safeName = String(name || "").trim();
+  const safeCompanyNumber = String(companyNumber || "").trim();
+  const safeStatus = normalizeStatusForDb(status);
+
+  if (!safeName) {
+    throw { statusCode: 400, message: "Company name is required" };
+  }
+
+  if (!safeCompanyNumber) {
+    throw { statusCode: 400, message: "Company number is required" };
+  }
+
+  if (!safeStatus) {
+    throw {
+      statusCode: 400,
+      message: "Status must be either Active or Dormant",
+    };
+  }
+
+  const result = await pool.query(
+    `
+      INSERT INTO companies (name, company_number, status)
+      VALUES ($1, $2, $3)
+      RETURNING
+        id,
+        name,
+        company_number AS "companyNumber",
+        status
+    `,
+    [safeName, safeCompanyNumber, safeStatus],
+  );
+
+  const insertedCompany = result.rows[0];
+
+  return {
+    ...insertedCompany,
+    status: toDisplayStatus(insertedCompany.status) ?? insertedCompany.status,
+  };
+};
+
+const parseDateOnly = (value) => {
+  if (!value) return null;
+  const parsed = String(value).trim();
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(parsed)) return null;
+  return parsed;
+};
+
+const createOfficer = async ({
+  name,
+  companyId,
+  role,
+  appointed,
+  resigned,
+}) => {
+  const safeName = String(name || "").trim();
+  const safeRole = String(role || "").trim();
+  const safeCompanyId = Number(companyId);
+  const safeAppointed = parseDateOnly(appointed);
+  const safeResigned = parseDateOnly(resigned);
+
+  if (!safeName) {
+    throw { statusCode: 400, message: "Officer name is required" };
+  }
+
+  if (!Number.isInteger(safeCompanyId) || safeCompanyId <= 0) {
+    throw { statusCode: 400, message: "A valid company is required" };
+  }
+
+  if (!safeRole) {
+    throw { statusCode: 400, message: "Officer role is required" };
+  }
+
+  if (!safeAppointed) {
+    throw { statusCode: 400, message: "Appointed date is required" };
+  }
+
+  if (resigned && !safeResigned) {
+    throw { statusCode: 400, message: "Resigned date must be YYYY-MM-DD" };
+  }
+
+  if (safeResigned && safeResigned < safeAppointed) {
+    throw {
+      statusCode: 400,
+      message: "Resigned date cannot be before appointed date",
+    };
+  }
+
+  const companyExists = await pool.query(
+    "SELECT id FROM companies WHERE id = $1",
+    [safeCompanyId],
+  );
+
+  if (!companyExists.rows[0]) {
+    throw { statusCode: 400, message: "Selected company does not exist" };
+  }
+
+  const result = await pool.query(
+    `
+      INSERT INTO officers (name, company_id, role, appointed_on, resigned_on)
+      VALUES ($1, $2, $3, $4, $5)
+      RETURNING id, name, role, appointed_on AS appointed, resigned_on AS resigned
+    `,
+    [safeName, safeCompanyId, safeRole, safeAppointed, safeResigned],
+  );
+
+  return result.rows[0];
+};
+
 module.exports = {
   getCompanyTable,
+  getOfficerTable,
+  createCompany,
+  createOfficer,
 };

@@ -29,7 +29,21 @@ export default function Filings() {
               label: "Company:",
               values: ["All Companies", "Active", "Dormant"],
             },
-            { id: 2, label: "Internal Ref:", values: ["Any, 1, 2, 3"] },
+            {
+              id: 2,
+              label: "Type:",
+              values: [
+                "Annual Report",
+                "Change of Address",
+                "Annual Accounts",
+                "Director Appointment",
+                "Confirmation Statement",
+                "Share Allotment",
+                "Director Resignation",
+                "Change of Registered Office",
+                "Share Transfer",
+              ],
+            },
           ]}
           textFieldLabel="Search filings..."
         />

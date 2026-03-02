@@ -28,7 +28,14 @@ export default function MuiSelect({
       <InputLabel id={labelId} sx={{ fontWeight: "bold", fontSize: "18px" }}>
         {inputLabelValue}
       </InputLabel>
-      <Select {...selectProps} sx={{ width: "15rem" }}>
+      <Select
+        {...selectProps}
+        MenuProps={{
+          PaperProps: { sx: { maxHeight: 320 } },
+          ...selectProps.MenuProps,
+        }}
+        sx={{ width: "15rem" }}
+      >
         {options.map((opt) => (
           <MenuItem key={opt.value} value={opt.value}>
             {opt.label}

@@ -4,6 +4,23 @@ import ActionsButtonSet from "@/src/components/buttons/ActionsButtonSet";
 import type { ColumnDef } from "@/src/types/columns.types";
 import { Officers } from "@/src/types/officers.types";
 
+const formatUkDateTime = (value: string) => {
+  if (!value) return { date: "", time: "" };
+
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) {
+    return { date: value, time: "" };
+  }
+
+  return {
+    date: new Intl.DateTimeFormat("en-GB", {
+      day: "2-digit",
+      month: "2-digit",
+      year: "numeric",
+    }).format(date),
+  };
+};
+
 export const OfficerColumns: ColumnDef<Officers>[] = [
   {
     header: "ID",
@@ -23,11 +40,28 @@ export const OfficerColumns: ColumnDef<Officers>[] = [
   },
   {
     header: "Appointed",
-    cell: (c) => <span style={{ fontWeight: 700 }}>{c.appointed}</span>,
+    cell: (c) => {
+      const value = formatUkDateTime(c.appointed);
+      return (
+        <span style={{ fontWeight: 700 }}>
+          <div>{value.date}</div>
+          <div style={{ fontWeight: 500, fontSize: "12px" }}>{value.time}</div>
+        </span>
+      );
+    },
   },
   {
     header: "Resigned",
-    cell: (c) => <span style={{ fontWeight: 700 }}>{c.resigned}</span>,
+    cell: (c) => {
+      const value = formatUkDateTime(c.resigned);
+      if (!value.date) return <span style={{ fontWeight: 700 }}>-</span>;
+      return (
+        <span style={{ fontWeight: 700 }}>
+          <div>{value.date}</div>
+          <div style={{ fontWeight: 500, fontSize: "12px" }}>{value.time}</div>
+        </span>
+      );
+    },
   },
   {
     header: "Actions",

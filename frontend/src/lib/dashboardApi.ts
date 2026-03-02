@@ -1,4 +1,5 @@
 import type { CompanyTablePayload } from "@/src/types/dashboard.types";
+import type { Officers } from "@/src/types/officers.types";
 
 const API_BASE = process.env.NEXT_PUBLIC_API_URL as string;
 
@@ -49,6 +50,18 @@ export const fetchCompanyTable = async (
 
   if (!response.ok) {
     return { columns: [], rows: [] };
+  }
+
+  return response.json();
+};
+
+export const fetchOfficerTable = async (): Promise<Officers[]> => {
+  const response = await fetch(`${API_BASE}/api/dashboard/officers`, {
+    cache: "no-store",
+  });
+
+  if (!response.ok) {
+    return [];
   }
 
   return response.json();

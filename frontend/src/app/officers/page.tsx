@@ -2,13 +2,26 @@ import MuiButton from "@/src/components/buttons/MuiButton";
 import MuiContainer from "@/src/components/layout/mui/MuiContainer";
 import MuiHeader from "@/src/components/layout/mui/MuiHeader";
 import MuiNavigation from "@/src/components/layout/mui/MuiNavigation";
-import MuiQueryInput from "@/src/components/layout/mui/MuiQueryInput";
-import { OfficerColumns } from "@/src/features/officers";
-import { TableClient } from "@/src/features/table";
-import { mockOfficers } from "@/src/mocks/officers";
+import { OfficerTablePanel } from "@/src/features/officers";
+import { fetchCompanyTable, fetchOfficerTable } from "@/src/lib/dashboardApi";
 import Link from "next/link";
 
-export default function Officers() {
+export default async function Officers() {
+  const officers = await fetchOfficerTable();
+  const companies = await fetchCompanyTable({
+    page: 1,
+    pageSize: 1000,
+    sortBy: "Name",
+  });
+  const companyNames = [
+    "All Companies",
+    ...new Set((companies.rows ?? []).map((company) => company.name)),
+  ];
+  const roleOptions = [
+    ...new Set(officers.map((officer) => officer.role).filter(Boolean)),
+  ].sort((a, b) => a.localeCompare(b));
+  const roles = ["All Roles", ...roleOptions];
+
   return (
     <>
       <MuiNavigation />
@@ -22,20 +35,17 @@ export default function Officers() {
           }
           subTitle="Officer list"
         />
-        <MuiQueryInput
+        <OfficerTablePanel
+          initialRows={officers}
           querySelectTitles={[
             {
               id: 1,
               label: "Company:",
-              values: ["All Companies", "Active", "Dormant"],
+              values: companyNames,
             },
-            { id: 2, label: "Role:", values: ["Any, 1, 2, 3"] },
+            { id: 2, label: "Role:", values: roles },
           ]}
           textFieldLabel="Search officers..."
-        />
-        <TableClient
-          rows={mockOfficers}
-          columns={OfficerColumns}
           rowsPerPageOptions={[8, 12, 15]}
         />
       </MuiContainer>

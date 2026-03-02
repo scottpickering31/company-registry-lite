@@ -98,7 +98,7 @@ export default function AuditLog() {
       <MuiContainer
         sx={{ display: "flex", justifyContent: "flex-end", pt: "0.5rem" }}
       >
-        <Link href="/audit-logs/view-audit-logs">
+        <Link href="/audit-logs">
           <p
             style={{
               fontSize: "15px",

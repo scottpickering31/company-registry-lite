@@ -22,6 +22,7 @@ type Props = {
 
 const DEFAULT_STATUS_ID = 1;
 const DEFAULT_SORT_ID = 2;
+const COMPANY_TABLE_FETCH_LIMIT = 1000;
 
 export default function CompanyTablePanel({
   initialData,
@@ -57,6 +58,8 @@ export default function CompanyTablePanel({
         status: status === "All" ? undefined : (status as "Active" | "Dormant"),
         sortBy: sortBy as "Name" | "Date Created",
         q: q ? q : undefined,
+        page: 1,
+        pageSize: COMPANY_TABLE_FETCH_LIMIT,
       });
 
       if (next.columns.length === 0) {

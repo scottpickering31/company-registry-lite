@@ -17,6 +17,70 @@ const getCompanyTable = async (req, res) => {
   }
 };
 
+const getOfficerTable = async (_req, res) => {
+  try {
+    const payload = await dashboardService.getOfficerTable();
+    res.json(payload);
+  } catch (error) {
+    console.error("Failed to fetch officers from database", error);
+    res.status(500).json({ message: "Failed to load officers" });
+  }
+};
+
+const createCompany = async (req, res) => {
+  const { name, companyNumber, status } = req.body || {};
+
+  try {
+    const createdCompany = await dashboardService.createCompany({
+      name,
+      companyNumber,
+      status,
+    });
+
+    res.status(201).json(createdCompany);
+  } catch (error) {
+    if (error?.statusCode) {
+      res.status(error.statusCode).json({ message: error.message });
+      return;
+    }
+
+    if (error?.code === "23505") {
+      res.status(409).json({ message: "Company number already exists" });
+      return;
+    }
+
+    console.error("Failed to create company", error);
+    res.status(500).json({ message: "Failed to create company" });
+  }
+};
+
+const createOfficer = async (req, res) => {
+  const { name, companyId, role, appointed, resigned } = req.body || {};
+
+  try {
+    const createdOfficer = await dashboardService.createOfficer({
+      name,
+      companyId,
+      role,
+      appointed,
+      resigned,
+    });
+
+    res.status(201).json(createdOfficer);
+  } catch (error) {
+    if (error?.statusCode) {
+      res.status(error.statusCode).json({ message: error.message });
+      return;
+    }
+
+    console.error("Failed to create officer", error);
+    res.status(500).json({ message: "Failed to create officer" });
+  }
+};
+
 module.exports = {
   getCompanyTable,
+  getOfficerTable,
+  createCompany,
+  createOfficer,
 };
